@@ -16,12 +16,12 @@
 	   			http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 	   			http://www.springframework.org/schema/tx
 	   			http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
 <!-- 扫描包,自动生成bean对象 -->
-<context:component-scan base-package="com.crm.Dao" />
+<context:component-scan base-package="com.crm.dao" />
 
 <!-- 引入外部属性配置文件 -->
-<bean id="propertyConfigurer" 
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	<property name="location" value="classpath:jdbc.properties" />
 </bean>
 
@@ -36,26 +36,28 @@
 <property name="maxTotal" value="${maxTotal}" />
 <property name="maxIdle" value="${maxIdle}" />
 <property name="minIdle" value="${minIdle}" />
-<property name="maxWait" value="${maxWait}" />
+<property name="maxWaitMillis" value="${maxWait}" />
 </bean>
 
 <!-- 获得一个会话工厂 -->
 <bean id="sessionFactory"
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 <property name="dataSource" ref="dataSource" />
-<property name="packageToScan" value="com.crm.domain" />
+<property name="packagesToScan" value="com.crm.domain" />
 <property name="hibernateProperties">
 	<props>
-		<prop key="hibernate.dialect">org.hibernate.dialect.Mysql5Dialect</prop>
+		<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 		<prop key="hibernate.show_sql">true</prop>
 	</props>
 </property>
 </bean>
+
 <!-- 配置一个事务管理器 -->
 <bean id="txManager" 
 		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
 <property name="sessionFactory" ref="sessionFactory" />
 </bean>
+
 <!-- 配置注解式事物 -->
 <tx:annotation-driven transaction-manager="txManager" />
 </beans>
