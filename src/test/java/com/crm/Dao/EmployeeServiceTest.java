@@ -1,8 +1,6 @@
 package com.crm.Dao;
 
-import java.sql.Date;
 import java.util.List;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -30,7 +28,6 @@ public class EmployeeServiceTest {
 		e.setLevel("L0");
 		e.setJobState("实习");
 		e.setDescription("快乐");
-		e.setCreateTime(new Date(0));
 		es.addEmployee(e);
 	}
 	

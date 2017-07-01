@@ -1,8 +1,6 @@
 package com.crm.domain;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -66,9 +64,6 @@ public class Employee {
 	private String jobState;
 	
 	private String description;
-	
-	@Column(name = "create_time")
-	private Date createTime;
 	
 	public Employee(){}
 	
@@ -263,14 +258,6 @@ public class Employee {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
 	}
 	
 }

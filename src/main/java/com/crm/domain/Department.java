@@ -1,7 +1,5 @@
 package com.crm.domain;
 
-import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,9 +26,6 @@ public class Department {
 	
 	@Column(name = "department_description")
 	private String departmentDescription;
-	
-	@Column(name = "dept_create_time")
-	private Date deptCreateTime;
 
 	public Integer getDepartmentId() {
 		return departmentId;
@@ -70,15 +65,6 @@ public class Department {
 
 	public void setDepartmentDescription(String departmentDescription) {
 		this.departmentDescription = departmentDescription;
-	}
-
-	public Date getDeptCreateTime() {
-		return deptCreateTime;
-	}
-
-	public void setDeptCreateTime(Date deptCreateTime) {
-		this.deptCreateTime = deptCreateTime;
-	}
-	
+	}	
 	
 }

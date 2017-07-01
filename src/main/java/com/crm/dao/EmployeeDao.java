@@ -39,14 +39,16 @@ public class EmployeeDao implements EmployeeService{
 		List<Employee> list = findMaxId();
 		for(Employee e : list) {
 			String currentLastEmployeeNumber = e.getEmployeeNumber();
-			System.out.println(currentLastEmployeeNumber);	
-			String theDateNumber = currentLastEmployeeNumber.substring(0,8);
-			System.out.println(theDateNumber);
-			if(currentLastEmployeeNumber == null || !theDateNumber.equals(prefix)) {
-				employee.setEmployeeNumber(prefix + "001");
+			if(currentLastEmployeeNumber != null) {
+				String theDateNumber = currentLastEmployeeNumber.substring(0,8);
+				if(!theDateNumber.equals(prefix)) {
+					employee.setEmployeeNumber(prefix + "001");
+				} else {
+					long temp = Long.parseLong(currentLastEmployeeNumber) + 1;
+					employee.setEmployeeNumber("" + temp);
+				}
 			} else {
-				long temp = Long.parseLong(currentLastEmployeeNumber) + 1;
-				employee.setEmployeeNumber("" + temp);
+				employee.setEmployeeNumber(prefix + "001");
 			}
 		}
 		session.save(employee);
@@ -90,6 +92,7 @@ public class EmployeeDao implements EmployeeService{
 	public Employee findEmployee(int employeeId) {
 		return currentSession().get(Employee.class, employeeId);
 	}
+	
 	//根据员工号来查询员工
 	@SuppressWarnings("unchecked")
 	@Override
