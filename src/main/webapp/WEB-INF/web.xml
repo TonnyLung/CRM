@@ -18,7 +18,11 @@
   <!-- 在上下文中加载其他配置文件 -->
   <context-param>
   	<param-name>contextConfigLocation</param-name>
-  	<param-value></param-value>
+  	<param-value>
+  		classpath:employee-datasource.xml
+  		classpath:employee-jdbc.xml
+  		classpath:employee-service.xml
+  	</param-value>
   </context-param>
   
   <!-- 编码过滤器 -->
@@ -39,15 +43,23 @@
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
   
-    <!-- 配置spring监听器 -->
+  <!-- 配置spring监听器 -->
   <listener>
   	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener> 
+  <!-- 防止spring溢出监听器 -->
+  <listener>
+  	<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+  </listener>
   
   <!-- 配置前端控制器 -->
   <servlet>
 	  <servlet-name>employee</servlet-name>
 	  <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	  <init-param>
+	  	<param-name>contextConfigLocation</param-name>
+	  	<param-value>classpath:employee-servlet</param-value>
+	  </init-param>
 	  <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>

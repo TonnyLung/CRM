@@ -1,5 +1,7 @@
 package com.crm.dao;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -29,9 +31,25 @@ public class EmployeeDao implements EmployeeService{
 	
 	//将对象持久化到对应的数据库中
 	@Override
-	@Transactional(propagation=Propagation.NOT_SUPPORTED, readOnly=true)
 	public void addEmployee(Employee employee) {
-		currentSession().save(employee);
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		String prefix = format.format(date);
+		Session session = currentSession();
+		List<Employee> list = findMaxId();
+		for(Employee e : list) {
+			String currentLastEmployeeNumber = e.getEmployeeNumber();
+			System.out.println(currentLastEmployeeNumber);	
+			String theDateNumber = currentLastEmployeeNumber.substring(0,8);
+			System.out.println(theDateNumber);
+			if(currentLastEmployeeNumber == null || !theDateNumber.equals(prefix)) {
+				employee.setEmployeeNumber(prefix + "001");
+			} else {
+				long temp = Long.parseLong(currentLastEmployeeNumber) + 1;
+				employee.setEmployeeNumber("" + temp);
+			}
+		}
+		session.save(employee);
 	}
 	
 	//从数据库中删除相应的对象
@@ -56,7 +74,7 @@ public class EmployeeDao implements EmployeeService{
 	
 	//更新数据库中的对象
 	@Override
-	public void UpdateEmployee(Employee employee) {
+	public void updateEmployee(Employee employee) {
 		currentSession().update(employee);
 	}
 	
@@ -68,12 +86,14 @@ public class EmployeeDao implements EmployeeService{
 	
 	//根据id查找数据库中的对象
 	@Override
+	@Transactional(propagation=Propagation.NOT_SUPPORTED, readOnly=true)
 	public Employee findEmployee(int employeeId) {
 		return currentSession().get(Employee.class, employeeId);
 	}
 	//根据员工号来查询员工
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional(propagation=Propagation.NOT_SUPPORTED, readOnly=true)
 	public List<Employee> findEmployeeByEmployeeNumber(String employeeNumber) {
 		return currentSession()
 				.createQuery("select e from Employee e where e.employeeNumber=?")
@@ -83,7 +103,24 @@ public class EmployeeDao implements EmployeeService{
 	//查询数据库中所有的对象
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Employee> findAllEmoployee() {
+	@Transactional(propagation=Propagation.NOT_SUPPORTED, readOnly=true)
+	public List<Employee> findAllEmployee() {
 		return currentSession().createQuery("from Employee").list();
+	}
+	
+	//根据员工名字查找员工
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(propagation=Propagation.NOT_SUPPORTED, readOnly=true)
+	public List<Employee> findEmployeeByName(String name) {
+		return currentSession().createQuery("select e from Employee e where name=?")
+					.setParameter(0, name).list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Employee> findMaxId() {
+		return currentSession().createQuery
+				("select new Employee(max(e.employeeId), max(e.employeeNumber)) from Employee e").list();
 	}
 }

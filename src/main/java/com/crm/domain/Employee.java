@@ -2,8 +2,6 @@ package com.crm.domain;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +16,7 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "employee_id")
-	private Integer EmployeeId;
+	private Integer employeeId;
 	
 	@Column(name = "employee_number")
 	private String employeeNumber;
@@ -71,28 +69,24 @@ public class Employee {
 	
 	@Column(name = "create_time")
 	private Date createTime;
-	//定义一个全局计数器
-	private static int counter = 0;
-	//获得一个类变量日期变量,用于跟后面的局部变量比较
-	static Calendar calendar = new GregorianCalendar();
-	private static int staticDay = calendar.get(Calendar.DAY_OF_MONTH);
 	
-	public Employee() {
+	public Employee(){}
+	
+	public Employee(Integer employeeId, String employeeNumber) {
+		this.employeeId = employeeId;
+		this.employeeNumber = employeeNumber;
+	}
+	
+	public void employeeNumber() {
 		//用日期和一个从001开始的三位数共同作为员工工号
 		//如：20160624001前面8为为年月日组成后面三位为一个从001自动升号的三位数
 		java.util.Date date = new java.util.Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 		//获得日期前缀
 		String prefix = format.format(date);
-		int count = ++counter;
+		int count = 1;
 		//获得一个局部日期变量,用来与类日期变量进行比较,如果相等则什么都不做，
 		//如果不等则将计数器清零,重新计数,且将局部日期变量赋值给类日期变量,用以改变日期
-		int day = new GregorianCalendar().get(Calendar.DAY_OF_MONTH);
-		if (day != staticDay) {
-			counter = 0;
-			count = ++counter;
-			staticDay = day;
-		}
 		//将整数类型转换成字符串类型再根据字符串长度对其进行拼接
 		String scount = String.valueOf(count);
 		if(scount.length() == 1) {
@@ -100,16 +94,15 @@ public class Employee {
 		} else if(scount.length() == 2) {
 			scount = "0" + scount;
 		}
-		
 		this.setEmployeeNumber(prefix + scount);
 	}
 	
 	public Integer getEmployeeId() {
-		return EmployeeId;
+		return employeeId;
 	}
 
 	public void setEmployeeId(Integer employeeId) {
-		EmployeeId = employeeId;
+		this.employeeId = employeeId;
 	}
 
 	public String getEmployeeNumber() {

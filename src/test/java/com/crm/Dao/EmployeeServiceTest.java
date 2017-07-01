@@ -48,18 +48,36 @@ public class EmployeeServiceTest {
 		}
 	}
 	
+	public void findEmployeeByName(String name, EmployeeService es) {
+		List<Employee> list = es.findEmployeeByName(name);
+		for(Employee e : list) {
+			System.out.println(e.getName() + " : " + e.getEmployeeId() + " : " + 
+					e.getEmployeeNumber() + " : " + e.getAge() + " : " + e.getTelephone());
+		}
+	}
+	
+	public void findMaxEmployeeId(EmployeeService es) {
+		List<Employee> list = es.findMaxId();
+		for(Employee e : list) {
+			System.out.println(e.getEmployeeId() + " : " + e.getEmployeeNumber());
+		}
+	}
+	
 	public static void main(String[] args) {
 		@SuppressWarnings("resource")
 		ApplicationContext context = 
-					new ClassPathXmlApplicationContext("classpath:employee-servlet.xml");
+					new ClassPathXmlApplicationContext("classpath:employee-jdbc.xml");
 		EmployeeService es = (EmployeeService)context.getBean("employeeDao");
-		/*Employee e = new Employee();*/
+		Employee e = new Employee();
 		EmployeeServiceTest est = new EmployeeServiceTest();
-		/*est.addEmployeeTest(e, es);*/
-		int employeeId = 2;
+		est.addEmployeeTest(e, es);
+		/*int employeeId = 2;
 		est.findEmployeeById(employeeId, es);
-		
-		String employeeNumber = "20170624002";
+		String employeeNumber = "20170629002";
 		est.findEmployeeByNumber(employeeNumber, es);
+		
+		String name ="刘德华";
+		est.findEmployeeByName(name, es);*/
+		/*est.findMaxEmployeeId(es);*/
 	}
 }

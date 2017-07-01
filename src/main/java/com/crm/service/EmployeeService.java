@@ -38,7 +38,7 @@ public interface EmployeeService {
 	 * 更新数据库中的对象
 	 * @param employee
 	 */
-	public void UpdateEmployee(Employee employee);
+	public void updateEmployee(Employee employee);
 	
 	/**
 	 * 根据对象是瞬时对象还是游离对象将对象save或者update到数据库中
@@ -67,5 +67,15 @@ public interface EmployeeService {
 	 * @return 返回一个存储了所查找类对象的列表
 	 * 通过对列表遍历就可以得到所有查找到的数据库记录
 	 */
-	public List<Employee> findAllEmoployee();
+	public List<Employee> findAllEmployee();
+	
+	/**
+	 * 根据员工名字查找对象
+	 * @param name
+	 * @return 返回一个存储了所查找类对象的列表
+	 * 通过对列表遍历就可以得到所有查找到的数据库记录
+	 */
+	public List<Employee> findEmployeeByName(String name);
+	
+	public List<Employee> findMaxId();
 }
