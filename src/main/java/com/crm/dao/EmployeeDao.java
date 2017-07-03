@@ -32,18 +32,23 @@ public class EmployeeDao implements EmployeeService{
 	//将对象持久化到对应的数据库中
 	@Override
 	public void addEmployee(Employee employee) {
+		//获得一个类似20170622格式的日期
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 		String prefix = format.format(date);
 		Session session = currentSession();
+		//从数据库中获得最后一个记录(employeeId值最大的一个实体对象)
 		List<Employee> list = findMaxId();
 		for(Employee e : list) {
 			String currentLastEmployeeNumber = e.getEmployeeNumber();
+			//如果数据库中的记录不为空,即能够后的最后一个记录值时
 			if(currentLastEmployeeNumber != null) {
 				String theDateNumber = currentLastEmployeeNumber.substring(0,8);
+				//比较从数据库中获得的最后一条记录的日期与现在的日期比较,如果不同的话，则从'日期+001'编写员工工号
+				//相同的话则将String类型的日期解析成long,再加1即得到新员工的编号
 				if(!theDateNumber.equals(prefix)) {
 					employee.setEmployeeNumber(prefix + "001");
-				} else {
+				} else {//如果数据库中没有记录,即list中的值为null时
 					long temp = Long.parseLong(currentLastEmployeeNumber) + 1;
 					employee.setEmployeeNumber("" + temp);
 				}

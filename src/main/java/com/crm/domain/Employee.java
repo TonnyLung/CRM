@@ -1,12 +1,16 @@
 package com.crm.domain;
 
-import java.text.SimpleDateFormat;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Table(name = "employee")
@@ -19,26 +23,34 @@ public class Employee {
 	@Column(name = "employee_number")
 	private String employeeNumber;
 	
+	@Size(min=2, max=10, message="名字长度为1到5个文字,或2到10个英文单词")
 	private String name;
 	
+	@NotNull(message="选择性别")
 	private String sex;
 	
+	@Range(min=18, max=70, message="年龄在18到70岁之间")
+	@NotNull(message="年龄不能为空")
 	private Integer age;
 	
 	@Column(name = "id_class")
 	private String idClass;
 	
 	@Column(name = "id_number")
+	@NotNull(message="身份证号不能 为空")
 	private String idNumber;
 	
+	@Size(min=11, max=11, message="请输入11位手机号码")
 	private String telephone;
 	
 	@Column(name = "home_address")
 	private String homeAddress;
 	
 	@Column(name = "working_address")
+	@NotNull(message="现居地址不能 为空")
 	private String workingAddress;
 	
+	@Email
 	private String email;
 	
 	@Column(name = "emergency_contact_person")
@@ -54,14 +66,19 @@ public class Employee {
 	private String specialty;
 	
 	@Column(name = "department_id")
+	@NotNull(message="部门号不能 为空")
 	private String departmentId;
 	
+	@NotNull(message="职务不能 为空")
 	private String job;
 	
+	@NotNull(message="级别不能 为空")
 	private String level;
 	
 	@Column(name = "job_state")
+	@NotNull(message="工作状态不能 为空")
 	private String jobState;
+	
 	
 	private String description;
 	
@@ -70,27 +87,7 @@ public class Employee {
 	public Employee(Integer employeeId, String employeeNumber) {
 		this.employeeId = employeeId;
 		this.employeeNumber = employeeNumber;
-	}
-	
-	public void employeeNumber() {
-		//用日期和一个从001开始的三位数共同作为员工工号
-		//如：20160624001前面8为为年月日组成后面三位为一个从001自动升号的三位数
-		java.util.Date date = new java.util.Date();
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-		//获得日期前缀
-		String prefix = format.format(date);
-		int count = 1;
-		//获得一个局部日期变量,用来与类日期变量进行比较,如果相等则什么都不做，
-		//如果不等则将计数器清零,重新计数,且将局部日期变量赋值给类日期变量,用以改变日期
-		//将整数类型转换成字符串类型再根据字符串长度对其进行拼接
-		String scount = String.valueOf(count);
-		if(scount.length() == 1) {
-			scount = "00" + scount;
-		} else if(scount.length() == 2) {
-			scount = "0" + scount;
-		}
-		this.setEmployeeNumber(prefix + scount);
-	}
+	}	
 	
 	public Integer getEmployeeId() {
 		return employeeId;
@@ -116,7 +113,7 @@ public class Employee {
 		this.name = name;
 	}
 
-	public String isSex() {
+	public String getSex() {
 		return sex;
 	}
 
