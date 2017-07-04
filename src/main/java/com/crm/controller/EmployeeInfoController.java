@@ -38,7 +38,6 @@ public class EmployeeInfoController {
 		if(bindingResult.hasErrors()) {
 			return "employee/editForm";
 		}
-		
 		employeeService.addEmployee(employee);
 		List<Employee> list= employeeService.findMaxId();
 		String employeeNumber = null;
@@ -50,7 +49,10 @@ public class EmployeeInfoController {
 	
 	@RequestMapping(value="/{employeeNumber}", method=RequestMethod.GET)
 	public String showEmployee(@PathVariable String employeeNumber, Model model) {
-		model.addAllAttributes(employeeService.findEmployeeByEmployeeNumber(employeeNumber));	
+		List<Employee> list = employeeService.findEmployeeByEmployeeNumber(employeeNumber);
+		for(Employee e : list) {
+			model.addAttribute("employee", e);
+		}
 		return "employee/view";
 	}
 }

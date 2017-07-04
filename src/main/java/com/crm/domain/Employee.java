@@ -209,7 +209,7 @@ public class Employee {
 		this.school = school;
 	}
 
-	public String getspecialty() {
+	public String getSpecialty() {
 		return specialty;
 	}
 
