@@ -14,7 +14,7 @@ table
 }
 .form
 {
-	width:60%;
+	width:75%;
 	margin:0 auto;
 	align:center;
 	position:relative;
@@ -30,20 +30,36 @@ table
 	top:140px;
 	left:-15px;
 }
+tr
+{
+	line-height:45px;
+}
 th
 {
 	text-align:right;
 	position:relative;
 	left:-10px;
+	color:#0066FF;
 }
 td
 {
 	text-align:left;
 }
-.form:hover
+input, textarea
 {
-	border:2px solid gray;
+	width:200px;
+	height:20px;
+	font-size:16px;
+	padding:5px;
+	border-radius:5px;
+	border:1px solid #CCCC99;
 }
+input:focus
+{
+    border-style:solid;
+    border-color:#339933
+}
+
 </STYLE>
 <title>录入员工信息</title>
 </head>
@@ -55,7 +71,7 @@ td
 <tr>
 	<th><label for="name">姓名:</label></th>
 	<td>
-		<form:input path="name" /> <br/>
+		<form:input path="name" autofocus="autofocus" /> <br/>
 		<form:errors path="name" cssClass="error" />
 	</td>
 </tr>
@@ -63,9 +79,9 @@ td
 <tr>
 	<th><label for="sex">性别:</label></th>
 	<td>
-		<form:radiobutton path="sex" value="男" /> 
+		<form:radiobutton path="sex" value="男" checked="true" style="width:50px;" /> 
 		<label for="sex_male">男</label> 
-		<form:radiobutton path="sex" value="女" />
+		<form:radiobutton path="sex" value="女" style="width:50px;" />
 		<label for="sex_female">女</label> <br/>
 		<form:errors path="sex" cssClass="error" />
 	</td>
@@ -82,7 +98,7 @@ td
 <tr>
 	<th></th>
 	<td>
-		<form:select path="idClass">
+		<form:select path="idClass" style="padding:6px;font-size:16px;">
 			<form:option value="身份证">身份证</form:option>
 			<form:option value="军人证">军人证</form:option>
 			<form:option value="回乡证">回乡证</form:option>
@@ -183,12 +199,12 @@ td
 
 <tr>
 	<th><label>备注</label></th>
-	<td><form:textarea path="description" /></td>
+	<td><form:textarea path="description" style="height:50px" /></td>
 </tr>
 
 <tr>
 	<th></th>
-	<td><input type="submit" value="提交" /></td>
+	<td><input type="submit" value="提交" style="width:70px;height:35px;"/></td>
 </tr>
 
 </table>
