@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+	   xmlns="http://www.springframework.org/schema/security"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	   			http://www.springframework.org/schema/security
+	   			http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+
+<!-- 引入外部属性配置文件 -->
+<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<beans:property name="location" value="classpath:jdbc.properties" />
+</beans:bean>
+
+<!-- 获得一个数据源,引入apache的dbcp2连接池 -->
+<beans:bean id="dataSource" 
+			class="org.apache.commons.dbcp2.BasicDataSource">
+	<beans:property name="driverClassName" value="${driver}" />
+	<beans:property name="url" value="${url}" />
+	<beans:property name="username" value="${username}" />
+	<beans:property name="password" value="${password}" />
+	<beans:property name="initialSize" value="${initialSize}" />
+	<beans:property name="maxTotal" value="${maxTotal}" />
+	<beans:property name="maxIdle" value="${maxIdle}" />
+	<beans:property name="minIdle" value="${minIdle}" />
+	<beans:property name="maxWaitMillis" value="${maxWait}" />
+</beans:bean>
+	   			
+<http auto-config="true">
+	<intercept-url pattern="/**" access="hasRole('ROLE_EMPLOYEE')" />
+</http>
+
+ <authentication-manager>
+ 	<authentication-provider>
+ 		<jdbc-user-service data-source-ref="dataSource"/> 
+ 	</authentication-provider>
+ </authentication-manager>
+			
+</beans:beans>

@@ -9,6 +9,7 @@
   <url>http://maven.apache.org</url>
   <properties>
   	<springframework.version>4.3.9.RELEASE</springframework.version>
+  	<spring-security.version>4.2.0.RELEASE</spring-security.version>
   </properties>
   <dependencies>
     <dependency>
@@ -16,7 +17,7 @@
       <artifactId>junit</artifactId>
       <version>4.12</version>
     </dependency>
-  <dependency>
+	<dependency>
    	  <groupId>mysql</groupId>
    	  <artifactId>mysql-connector-java</artifactId>
    	  <version>6.0.6</version>
@@ -71,19 +72,39 @@
 	    <artifactId>jstl</artifactId>
 	    <version>1.2</version>
 	</dependency>
+    <dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-core</artifactId>
+	    <version>${spring-security.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-web</artifactId>
+	    <version>${spring-security.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-config</artifactId>
+	    <version>${spring-security.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-taglibs</artifactId>
+	    <version>${spring-security.version}</version>
+	</dependency>  
     
   </dependencies>
   <build>
     <finalName>HumanResourceSystem</finalName>
     <plugins>
       <plugin>
-      	<groupId>org.mortbay.jetty</groupId>
+      	<groupId>org.eclipse.jetty</groupId>
       	<artifactId>jetty-maven-plugin</artifactId>
-      	<version>8.1.16.v20140903</version>
+      	<version>9.4.6.v20170531</version>
       	<configuration>
       		<scanInternalSeconds>10</scanInternalSeconds>
       		<webAppConfig>
-      			<contextPath>/springWeb</contextPath>
+      			<contextPath>/HRS</contextPath>
       		</webAppConfig>
       	</configuration>
       </plugin>
